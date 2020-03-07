@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
   }
 
+  // 5e637a18cbfae4000170fa7a
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
             child: Column(
               children: <Widget>[
                 Container(
+                  width: 140,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     gradient: LinearGradient(
@@ -59,16 +61,18 @@ class _MyAppState extends State<MyApp> {
                   ),
                   child: FlatButton(
                     onPressed: () {
-                      Mop.instance.openApplet('5e3c147a188211000141e9b1');
+                      Mop.instance.openApplet('5e3c147a188211000141e9b1',
+                          path: 'pages/index/index', query: '');
                     },
                     child: Text(
-                      '打开示例小程序',
+                      '打开画图小程序',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
                 SizedBox(height: 30),
                 Container(
+                  width: 140,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     gradient: LinearGradient(
@@ -84,6 +88,28 @@ class _MyAppState extends State<MyApp> {
                     },
                     child: Text(
                       '打开官方小程序',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Container(
+                  width: 140,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    gradient: LinearGradient(
+                      colors: const [Color(0xFF12767e), Color(0xFF0dabb8)],
+                      stops: const [0.0, 1.0],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: FlatButton(
+                    onPressed: () {
+                      Mop.instance.openApplet('5e637a18cbfae4000170fa7a');
+                    },
+                    child: Text(
+                      '我的对账单',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
