@@ -1,5 +1,5 @@
 PODS:
-  - FinApplet (2.0.196)
+  - FinApplet (2.1.3)
   - Flutter (1.0.0)
   - mop (0.1.0):
     - FinApplet
@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mop/ios"
 
 SPEC CHECKSUMS:
-  FinApplet: 629fb114471bb68eea3aace7fd9c28a7ce6326f8
+  FinApplet: 85f4c1b6bee9d811220fe8e6b301314ee30dd271
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   mop: e3eac9de90d3e331268e9c9e8308e233e540ad1c
 
