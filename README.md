@@ -64,7 +64,7 @@ Your application code is in mini_flutter/lib/main.dart.
 1. 引入小程序引擎插件。在 pubspec.yaml 文件中引入小程序 Flutter 插件
 
    ```yaml
-   mop: ^0.2.0
+   mop: ^0.5.0
    ```
 
 2. 在 main.dart 文件中增加以下小程序引擎初始化方法。 **Mop.instance.initialize** 这里需要用到 sdkkey 和 secret。可以直接在[https://mp.finogeeks.com](https://mp.finogeeks.com)免费注册获取。注册使用方法可以参考[接入指引](https://mp.finogeeks.com/mop/document/introduce/access/mechanism.html)
