@@ -21,12 +21,12 @@ class _MyAppState extends State<MyApp> {
   Future<void> init() async {
     if (Platform.isIOS) {
       final res = await Mop.instance.initialize(
-          '22LyZEib0gLTQdU3MUauAZ0pZVbKTWGmNN6Lx8hXhIkA', '74bde5fad53a817c',
+          '22LyZEib0gLTQdU3MUauATBwgfnTCJjdr7FCnywmAEM=', 'bdfd76cae24d4313',
           apiServer: 'https://mp.finogeeks.com', apiPrefix: '/api/v1/mop');
       print(res);
     } else if (Platform.isAndroid) {
       final res = await Mop.instance.initialize(
-          '22LyZEib0gLTQdU3MUauAZ0pZVbKTWGmNN6Lx8hXhIkA', '74bde5fad53a817c',
+          '22LyZEib0gLTQdU3MUauATBwgfnTCJjdr7FCnywmAEM=', 'bdfd76cae24d4313',
           apiServer: 'https://mp.finogeeks.com', apiPrefix: '/api/v1/mop');
       print(res);
     }
@@ -84,7 +84,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   child: FlatButton(
                     onPressed: () {
-                      Mop.instance.openApplet('5ea0401463cb900001d73865');
+                      Mop.instance.openApplet('5fa214a29a6a7900019b5cc1');
                     },
                     child: Text(
                       '打开官方小程序',
@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   child: FlatButton(
                     onPressed: () {
-                      Mop.instance.openApplet('5ea0412663cb900001d73867');
+                      Mop.instance.openApplet('5fa215459a6a7900019b5cc3');
                     },
                     child: Text(
                       '我的对账单',
