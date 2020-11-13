@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                   child: FlatButton(
                     onPressed: () {
-                      Mop.instance.openApplet('5ea03fa563cb900001d73863',
+                      Mop.instance.openApplet('5facb3a52dcbff00017469bd',
                           path: 'pages/index/index', query: '');
                     },
                     child: Text(
