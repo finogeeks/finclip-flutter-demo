@@ -1,176 +1,307 @@
-# 深入小程序系列之二、Flutter 和小程序混编
+<p align="center">
+    <a href="https://www.finclip.com?from=github">
+    <img width="auto" src="https://www.finclip.com/mop/document/images/logo.png">
+    </a>
+</p>
 
-## 背景
+<p align="center"> 
+    <strong>FinClip Flutter DEMO</strong></br>
+<p>
+<p align="center"> 
+        本项目提供在 Flutter 环境中运行小程序的示例 DEMO
+<p>
 
-本文我们将开一下脑洞，在 Flutter 工程基础上下集成及运行小程序方案。
+<p align="center"> 
+	👉 <a href="https://www.finclip.com?from=github">https://www.finclip.com/</a> 👈
+</p>
 
-先看一下效果如下:
+-----
+## 🤔 FinClip 是什么?
 
-![](./doc/mop_flutter_demo.gif)
+有没有**想过**，开发好的微信小程序能放在自己的 APP 里直接运行，只需要开发一次小程序，就能在不同的应用中打开它，是不是很不可思议？
 
-## 新建 Flutter 样例工程
+有没有**试过**，在自己的 APP 中引入一个 SDK ，应用中不仅可以打开小程序，还能自定义小程序接口，修改小程序样式，是不是觉得更不可思议？
 
-### Flutter 的安装
+这就是 FinClip ，就是有这么多不可思议！
 
-Flutter 的安装可参考[https://flutterchina.club/get-started/install/](https://flutterchina.club/get-started/install/)具体上主要执行以下三步即可。本文将使用 Flutter1.12.hotfix8 稳定版作为开发环境。
+## ⚙️ Flutter 集成
 
-1. 下载 FlutterSDK
-2. 配置 PATH 环境路径
-3. flutter doctor 检查环境
+在项目 `pubspec.yaml` 文件中添加依赖
 
-### 新建 Flutter 工程
-
-```bash
-
-flutter create --template=app --org=com.finogeeks.flutter --project-name=mini_flutter -i objc -a java ./mini_flutter
-
+```yaml
+mop: latest.version
 ```
 
-执行以上命令后，正常将会提示以下信息
+## 🖥 示例
 
-```bash
-All done!
-[✓] Flutter: is fully installed. (Channel stable, v1.12.13+hotfix.8, on Mac OS X 10.15.3 19D76, locale zh-Hans-CN)
-[✓] Android toolchain - develop for Android devices: is fully installed. (Android SDK version 29.0.3)
-[✓] Xcode - develop for iOS and macOS: is fully installed. (Xcode 11.3.1)
-[✓] Android Studio: is fully installed. (version 3.6)
-[!] IntelliJ IDEA Ultimate Edition: is partially installed; more components are available. (version 2019.3.3)
-[✓] VS Code: is fully installed. (version 1.42.1)
-[!] Proxy Configuration: is partially installed; more components are available.
-[✓] Connected device: is fully installed. (1 available)
+```flutter
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:mop/mop.dart';
 
-Run "flutter doctor" for information about installing additional components.
+void main() => runApp(MyApp());
 
-In order to run your application, type:
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-  $ cd mini_flutter
-  $ flutter run
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
 
-Your application code is in mini_flutter/lib/main.dart.
-```
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> init() async {
+    if (Platform.isiOS) {
+      //com.finogeeks.mopExample
+      final res = await Mop.instance.initialize(
+          '22LyZEib0gLTQdU3MUauARlLry7JL/2fRpscC9kpGZQA', '1c11d7252c53e0b6',
+          apiServer: 'https://api.finclip.com', apiPrefix: '/api/v1/mop');
+      print(res);
+    } else if (Platform.isAndroid) {
+      //com.finogeeks.mopexample
+      final res = await Mop.instance.initialize(
+          '22LyZEib0gLTQdU3MUauARjmmp6QmYgjGb3uHueys1oA', '98c49f97a031b555',
+          apiServer: 'https://api.finclip.com', apiPrefix: '/api/v1/mop');
+      print(res);
+    }
+    if (!mounted) return;
+  }
 
-注意！flutter 需要依赖本地安装对应的 iOS,Android 开发工具，即需要安装 Xcode 和 AndroidStudio。具体安装使用方法这里不赘述。
-这里我们用 VSCode+Xcode 作为开发组合环境，如果要正常调试需要确保以下三个检查项目是正常的。
-
-1. [✓] Xcode - develop for iOS and macOS: is fully installed. (Xcode 11.3.1)
-2. Flutter: is fully installed. (Channel stable, v1.12.13+hotfix.8, on Mac OS X 10.15.3 19D76, locale zh-Hans-CN)
-3. VS Code: is fully installed. (version 1.42.1)
-   [!] Proxy Configuration: is partially installed; more components are available.
-
-### 集成小程序解析引擎
-
-这里我们采用凡泰集成免费社区版的小程序解析引擎，只需要 10 行代码量不到即可完成小程序集成。
-
-1. 引入小程序引擎插件。在 pubspec.yaml 文件中引入小程序 Flutter 插件
-
-   ```yaml
-   mop: ^0.5.0
-   ```
-
-2. 在 main.dart 文件中增加以下小程序引擎初始化方法。 **Mop.instance.initialize** 这里需要用到 sdkkey 和 secret。可以直接在[https://mp.finogeeks.com](https://mp.finogeeks.com)免费注册获取。注册使用方法可以参考[接入指引](https://mp.finogeeks.com/mop/document/introduce/access/mechanism.html)
-
-   ```dart
-
-     // Platform messages are asynchronous, so we initialize in an async method.
-     Future<void> init() async {
-       if (Platform.isIOS) {
-         final res = await Mop.instance.initialize(
-             '22LyZEib0gLTQdU3MUauAYEY1h9s9YXzmGuSgQrin7UA', '9e05fa0015d7dbfa',
-             apiServer: 'https://mp.finogeeks.com', apiPrefix: '/api/v1/mop');
-         print(res);
-       } else if (Platform.isAndroid) {
-         final res = await Mop.instance.initialize(
-             '22LyZEib0gLTQdU3MUauAYEY1h9s9YXzmGuSgQrin7UA', '9e05fa0015d7dbfa',
-             apiServer: 'https://mp.finogeeks.com', apiPrefix: '/api/v1/mop');
-         print(res);
-       }
-       if (!mounted) return;
-     }
-   ```
-
-3. 在主界面上增加三个按钮来打开小程序
-
-```dart
-  Center(
-    child: Container(
-      padding: EdgeInsets.only(
-        top: 20,
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('凡泰极客小程序 Flutter 插件'),
+        ),
+        body: Center(
+          child: Container(
+            padding: EdgeInsets.only(
+              top: 20,
+            ),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    gradient: LinearGradient(
+                      colors: const [Color(0xFF12767e), Color(0xFF0dabb8)],
+                      stops: const [0.0, 1.0],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: FlatButton(
+                    onPressed: () {
+                      Mop.instance.openApplet('5e3c147a188211000141e9b1');
+                    },
+                    child: Text(
+                      '打开示例小程序',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    gradient: LinearGradient(
+                      colors: const [Color(0xFF12767e), Color(0xFF0dabb8)],
+                      stops: const [0.0, 1.0],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: FlatButton(
+                    onPressed: () {
+                      Mop.instance.openApplet('5e4d123647edd60001055df1',sequence: 1);
+                    },
+                    child: Text(
+                      '打开官方小程序',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: 140,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              gradient: LinearGradient(
-                colors: const [Color(0xFF12767e), Color(0xFF0dabb8)],
-                stops: const [0.0, 1.0],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-            child: FlatButton(
-              onPressed: () {
-                Mop.instance.openApplet('5e3c147a188211000141e9b1',
-                    path: 'pages/index/index', query: '');
-              },
-              child: Text(
-                '打开画图小程序',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 30),
-          Container(
-            width: 140,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              gradient: LinearGradient(
-                colors: const [Color(0xFF12767e), Color(0xFF0dabb8)],
-                stops: const [0.0, 1.0],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-            child: FlatButton(
-              onPressed: () {
-                Mop.instance.openApplet('5e4d123647edd60001055df1');
-              },
-              child: Text(
-                '打开官方小程序',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          SizedBox(height: 30),
-          Container(
-            width: 140,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              gradient: LinearGradient(
-                colors: const [Color(0xFF12767e), Color(0xFF0dabb8)],
-                stops: const [0.0, 1.0],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-            child: FlatButton(
-              onPressed: () {
-                Mop.instance.openApplet('5e637a18cbfae4000170fa7a');
-              },
-              child: Text(
-                '我的对账单',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  )
+    );
+  }
+}
 ```
 
-4.  运行 Flutter 程序
+## 📋  接口文档
 
-- 在代码根目录执行 flutter devices 查看本机安装的模拟器。
-- 执行 flutter run --debug 运行示例，运行效果之如本文最前面所展示的图示。
+### 1. 初始化小程序
+   
+   在使用 SDK 提供的 API 之前必须要初始化 SDK ，初始化 SDK 的接口如下
+
+```
+  ///
+  /// initialize mop miniprogram engine.
+  /// 初始化小程序
+  /// [appkey] is required. it can be getted from api.finclip.com
+  /// [secret] is required. it can be getted from api.finclip.com
+  /// [apiServer] is optional. the mop server address. default is https://mp.finogeek.com
+  /// [apiPrefix] is optional. the mop server prefix. default is /api/v1/mop
+  ///
+  ///
+  Future<Map> initialize(String appkey, String secret,
+      {String apiServer, String apiPrefix})
+```
+
+使用示例：
+```
+final res = await Mop.instance.initialize(
+          '22LyZEib0gLTQdU3MUauARlLry7JL/2fRpscC9kpGZQA', '1c11d7252c53e0b6',
+          apiServer: 'https://api.finclip.com', apiPrefix: '/api/v1/mop');
+```
+
+### 2. 打开小程序
+
+```
+  ///
+  /// open the miniprogram [appId] from the  mop server.
+  /// 打开小程序
+  /// [appId] is required.
+  /// [path] is miniprogram open path. example /pages/index/index
+  /// [query] is miniprogram query parameters. example key1=value1&key2=value2
+  ///
+  ///
+  Future<Map> openApplet(final String appId,
+      {final String path, final String query, final int sequence})
+```
+
+### 3. 获取当前正在使用的小程序信息
+
+当前小程序信息包括的字段有 `appId`, `name`, `icon`, `description`, `version`, `thumbnail`
+
+```
+  ///
+  ///  get current using applet
+  ///  获取当前正在使用的小程序信息
+  ///  {appId,name,icon,description,version,thumbnail}
+  ///
+  ///
+  Future<Map<String, dynamic>> currentApplet()
+```
+
+### 4. 关闭当前打开的所有小程序
+
+```
+  ///
+  /// close all running applets
+  /// 关闭当前打开的所有小程序
+  ///
+  Future closeAllApplets()
+```
+
+### 5. 清除缓存的小程序
+
+清除缓存的小程序，当再次打开时，会重新下载小程序
+```
+  ///
+  /// clear applets cache
+  /// 清除缓存的小程序
+  ///
+  Future clearApplets() 
+```
+
+### 6. 注册小程序事件处理
+
+当小程序内触发指定事件时，会通知到使用者，比如小程序被转发，小程序需要获取用户信息，注册处理器来做出对应的响应
+
+```
+  ///
+  /// register handler to provide custom info or behaviour
+  /// 注册小程序事件处理
+  ///
+  void registerAppletHandler(AppletHandler handler) 
+```
+
+处理器的结构
+```
+abstract class AppletHandler {
+  ///
+  /// 转发小程序
+  ///
+  ///
+  ///
+  void forwardApplet(Map<String, dynamic> appletInfo);
+
+  ///
+  ///获取用户信息
+  ///  "userId"
+  ///  "nickName"
+  ///  "avatarUrl"
+  ///  "jwt"
+  ///  "accessToken"
+  ///
+  Future<Map<String, dynamic>> getUserInfo();
+
+  /// 获取自定义菜单
+  Future<List<CustomMenu>> getCustomMenus(String appId);
+
+  ///自定义菜单点击处理
+  Future onCustomMenuClick(String appId, int menuId);
+}
+```
+
+### 7. 注册拓展 API
+
+如果，我们的小程序 SDK API 不满足您的需求，您可以注册自定义的小程序API，然后就可以在小程序内调用自已定义的 API 了。
+
+```
+  ///
+  /// register extension api
+  /// 注册拓展api
+  ///
+  void registerExtensionApi(String name, ExtensionApiHandler handler)
+```
+
+iOS 需要在小程序根目录创建 `FinChatConf.js` 文件，配置实例如下
+
+```
+module.exports = {
+  extApi:[
+    { //普通交互API
+      name: 'onCustomEvent', //扩展api名 该api必须Native方实现了
+      params: { //扩展api 的参数格式，可以只列必须的属性
+        url: ''
+      }
+    }
+  ]
+}
+```
+
+## 🔗 常用链接
+以下内容是您在 FinClip 进行开发与体验时，常见的问题与指引信息
+
+- [FinClip 官网](https://www.finclip.com/#/home)
+- [示例小程序](https://www.finclip.com/#/market)
+- [文档中心](https://www.finclip.com/mop/document/)
+- [SDK 部署指南](https://www.finclip.com/mop/document/introduce/quickStart/intergration-guide.html)
+- [小程序代码结构](https://www.finclip.com/mop/document/develop/guide/structure.html)
+- [iOS 集成指引](https://www.finclip.com/mop/document/runtime-sdk/ios/ios-integrate.html)
+- [Android 集成指引](https://www.finclip.com/mop/document/runtime-sdk/android/android-integrate.html)
+- [Flutter 集成指引](https://www.finclip.com/mop/document/runtime-sdk/flutter/flutter-integrate.html)
+
+## ☎️ 联系我们
+微信扫描下面二维码，关注官方公众号 **「凡泰极客」**，获取更多精彩内容。<br>
+<img width="150px" src="https://www.finclip.com/mop/document/images/ic_qr.svg">
+
+微信扫描下面二维码，邀请进官方微信交流群（加好友备注：finclip 咨询），获取更多精彩内容。<br>
+<img width="150px" src="https://finclip-homeweb-1251849568.cos.ap-guangzhou.myqcloud.com/images/ldy111.jpg">
+
+## Stargazers
+[![Stargazers repo roster for @finogeeks/finclip-flutter-demo](https://reporoster.com/stars/finogeeks/finclip-flutter-demo)](https://github.com/finogeeks/finclip-flutter-demo/stargazers)
+
+## Forkers
+[![Forkers repo roster for @finogeeks/finclip-flutter-demo](https://reporoster.com/forks/finogeeks/finclip-flutter-demo)](https://github.com/finogeeks/finclip-flutter-demo/network/members)
