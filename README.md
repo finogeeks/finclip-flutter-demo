@@ -254,14 +254,14 @@ abstract class AppletHandler {
 }
 ```
 
-### 7. 注册拓展 API
+### 7. 注册扩展 API
 
 如果，我们的小程序 SDK API 不满足您的需求，您可以注册自定义的小程序API，然后就可以在小程序内调用自已定义的 API 了。
 
 ```
   ///
   /// register extension api
-  /// 注册拓展api
+  /// 注册扩展api
   ///
   void registerExtensionApi(String name, ExtensionApiHandler handler)
 ```
