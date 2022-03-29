@@ -1,8 +1,11 @@
 PODS:
-  - FinApplet (2.8.6)
+  - FinApplet (2.35.13)
+  - FinAppletExt (2.35.13):
+    - FinApplet (= 2.35.13)
   - Flutter (1.0.0)
-  - mop (0.1.0):
-    - FinApplet
+  - mop (0.1.1):
+    - FinApplet (= 2.35.13)
+    - FinAppletExt (= 2.35.13)
     - Flutter
 
 DEPENDENCIES:
@@ -12,6 +15,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - FinApplet
+    - FinAppletExt
 
 EXTERNAL SOURCES:
   Flutter:
@@ -20,10 +24,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mop/ios"
 
 SPEC CHECKSUMS:
-  FinApplet: 5eefbc232bce0b1a0532901f31578f3c48b60837
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  mop: e3eac9de90d3e331268e9c9e8308e233e540ad1c
+  FinApplet: 995ebc5f7a8d1f2f917652df084a67250bf37e76
+  FinAppletExt: a49121f7f855cc78d7b650de2dba3450936d83ab
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  mop: d534eed805110178433155c8793b5464950890b8
 
-PODFILE CHECKSUM: 3dbe063e9c90a5d7c9e4e76e70a821b9e2c1d271
+PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.1
