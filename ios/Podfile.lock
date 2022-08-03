@@ -1,33 +1,59 @@
 PODS:
-  - FinApplet (2.36.9)
-  - FinAppletExt (2.36.9):
-    - FinApplet (= 2.36.9)
+  - FinApplet (2.37.1)
+  - FinAppletExt (2.37.1):
+    - FinApplet (= 2.37.1)
   - Flutter (1.0.0)
-  - mop (0.1.1):
-    - FinApplet (= 2.36.9)
-    - FinAppletExt (= 2.36.9)
+  - fluttertoast (0.0.2):
     - Flutter
+    - Toast
+  - fluwx (0.0.1):
+    - Flutter
+    - "OpenWeChatSDK (~> 1.9.2+1)"
+  - mop (0.1.1):
+    - FinApplet (= 2.37.1)
+    - FinAppletExt (= 2.37.1)
+    - Flutter
+  - "OpenWeChatSDK (1.9.2+1)"
+  - shared_preferences_ios (0.0.1):
+    - Flutter
+  - Toast (4.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - fluwx (from `.symlinks/plugins/fluwx/ios`)
   - mop (from `.symlinks/plugins/mop/ios`)
+  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
 
 SPEC REPOS:
   trunk:
     - FinApplet
     - FinAppletExt
+    - OpenWeChatSDK
+    - Toast
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  fluwx:
+    :path: ".symlinks/plugins/fluwx/ios"
   mop:
     :path: ".symlinks/plugins/mop/ios"
+  shared_preferences_ios:
+    :path: ".symlinks/plugins/shared_preferences_ios/ios"
 
 SPEC CHECKSUMS:
-  FinApplet: d374b915fe0a84f332c7ae75a21c45424d177ef3
-  FinAppletExt: 9aa5a79efc24d9904371489c6d42756b50a4e32d
+  FinApplet: 5cd2ff4b2857f4df172d6482f51249072521a963
+  FinAppletExt: 972a27de0fa37306ad860137d23480047b549e29
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  mop: 1c5a4255def49cd06be5098dd460812cb903f1e6
+  fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
+  fluwx: 79c66b6d795ab8208262ada215d9e60388cfe492
+  mop: b9eee43e137c9216155cdb296e33eea0e0230521
+  OpenWeChatSDK: 67375e7d4154c22f7ba6b1c334b121473e7d515c
+  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
