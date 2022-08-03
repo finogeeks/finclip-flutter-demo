@@ -23,7 +23,16 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  mop: 2.35.13
+  mop: 2.37.1
+  fluwx: 3.8.5
+  shared_preferences: ^2.0.11
+  fluttertoast: ^8.0.8
+  dio: ^4.0.1
+  crypto: ^3.0.2
+  # mop:
+  #   git:
+  #     url: https://github.com/finogeeks/mop-flutter-sdk
+  #     ref: alpha
 
 dev_dependencies:
   flutter_test:

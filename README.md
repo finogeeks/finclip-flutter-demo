@@ -159,6 +159,20 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
+## 📋  Demo功能介绍
+
+**微信登录**
+
+微信登录是通过自定义api注入login来实现的，需要依赖微信开放SDK。 
+* 首先注册微信SDK的Key和universallink。
+* 通过自定义api，注册login。可参考`main.dart`中注册的`login`以及`wechatLogin`相关逻辑。
+
+**微信支付**
+
+微信支付也是通过自定义api注入requestPayment来实现的，需要依赖微信开放SDK。 
+* 首先注册微信SDK的Key和universallink。
+* 通过自定义api，注册`requestPayment`。可参考`main.dart`中注册的`requestPayment`以及`requestPayment`相关逻辑。
+
 ## 📋  接口文档
 
 ### 1. 初始化小程序
