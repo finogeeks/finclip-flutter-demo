@@ -159,6 +159,90 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
+## 📘 目录结构
+```
+.
+├── LICENSE
+├── README.md
+├── android 安卓工程目录
+│   ├── app
+│   │   ├── build.gradle  应用构建配置
+│   │   └── src
+│   │       ├── debug
+│   │       │   └── AndroidManifest.xml 应用清单文件
+│   │       ├── main 应用源码主目录
+│   │       │   ├── AndroidManifest.xml 应用清单文件
+│   │       │   ├── java 应用源码目录
+│   │       │   │   ├── com
+│   │       │   │   │   └── finogeeks
+│   │       │   │   │       └── mop_demo
+│   │       │   │   │           └── MainActivity.java
+│   │       │   │   └── io
+│   │       │   │       └── flutter
+│   │       │   │           └── plugins
+│   │       │   │               └── GeneratedPluginRegistrant.java
+│   │       │   └── res 资源文件目录
+│   │       │       ├── drawable darwable资源目录
+│   │       │       │   └── launch_background.xml
+│   │       │       ├── mipmap-hdpi 图片资源目录
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-mdpi 图片资源目录
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xhdpi 图片资源目录
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xxhdpi 图片资源目录
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xxxhdpi 图片资源目录
+│   │       │       │   └── ic_launcher.png
+│   │       │       └── values
+│   │       │           └── styles.xml
+│   │       └── profile
+│   │           └── AndroidManifest.xml
+│   ├── build.gradle
+│   ├── gradle gradle版本配置目录，一般情况下无需关注
+│   │   └── wrapper
+│   │       └── gradle-wrapper.properties
+│   ├── gradle.properties
+│   ├── local.properties
+│   └── settings.gradle
+├── build
+├── doc
+│   └── mop_flutter_demo.gif
+├── ios iOS工程目录
+│   ├── Flutter Flutter-SDK目录，一般无需关注
+│   │   ├── AppFrameworkInfo.plist
+│   │   ├── Debug.xcconfig
+│   │   ├── Flutter.framework
+│   │   ├── Flutter.podspec
+│   │   ├── Generated.xcconfig
+│   │   ├── Release.xcconfig
+│   │   └── flutter_export_environment.sh
+│   ├── Podfile pod依赖配置文件
+│   ├── Runner iOS源码主目录
+│   │   ├── AppDelegate.h
+│   │   ├── AppDelegate.m
+│   │   ├── Assets.xcassets 图片资源
+│   │   │   ├── AppIcon.appiconset  图标
+│   │   │   └── LaunchImage.imageset 启动图
+│   │   ├── Base.lproj
+│   │   │   ├── LaunchScreen.storyboard
+│   │   │   └── Main.storyboard
+│   │   ├── FATFlutterViewController.h Flutter页面控制器子类
+│   │   ├── FATFlutterViewController.m Flutter页面控制器子类
+│   │   ├── GeneratedPluginRegistrant.h
+│   │   ├── GeneratedPluginRegistrant.m
+│   │   ├── Info.plist iOS工程配置文件
+│   │   └── main.m
+│   └── Runner.xcodeproj
+├── lib Flutter源码主目录
+│   ├── main.dart 首页
+│   └── wx_pay.dart 微信支付源码
+├── pubspec.lock
+├── pubspec.yaml Flutter配置文件
+└── test
+    └── widget_test.dart
+```
+
 ## 📋  接口文档
 
 ### 1. 初始化小程序
@@ -301,6 +385,29 @@ module.exports = {
     }
   ]
 }
+```
+
+## 📘 目录结构
+
+```
+.
+├─.github
+│          
+├─.vscode
+│      
+├─android 工程Android源码   
+│      
+├─ios 工程iOS源码
+│          
+├─lib 工程Flutter源码
+│  │
+│  ├─ main.dart 程序入口，以及各初始化、调用示例
+│  │
+│  └─ wx_pay.dart 微信支付类示例
+│
+├─test 测试目录，无需关注
+│      
+└─pubspec.yaml Flutter工程配置项
 ```
 
 ## 🔗 常用链接
