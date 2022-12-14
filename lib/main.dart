@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
                       end: Alignment.bottomCenter,
                     ),
                   ),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       Mop.instance.openApplet('5facb3a52dcbff00017469bd',
                           path: 'pages/index/index', query: '');
@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
                       end: Alignment.bottomCenter,
                     ),
                   ),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       Mop.instance.openApplet('5fa214a29a6a7900019b5cc1');
                     },
@@ -104,7 +104,7 @@ class _MyAppState extends State<MyApp> {
                       end: Alignment.bottomCenter,
                     ),
                   ),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       Mop.instance.openApplet('5fa215459a6a7900019b5cc3');
                     },
