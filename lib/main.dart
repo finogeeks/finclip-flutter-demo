@@ -19,17 +19,34 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> init() async {
-    if (Platform.isIOS) {
-      final res = await Mop.instance.initialize(
-          '22LyZEib0gLTQdU3MUauATBwgfnTCJjdr7FCnywmAEM=', 'bdfd76cae24d4313',
-          apiServer: 'https://api.finclip.com', apiPrefix: '/api/v1/mop');
-      print(res);
-    } else if (Platform.isAndroid) {
-      final res = await Mop.instance.initialize(
-          '22LyZEib0gLTQdU3MUauATBwgfnTCJjdr7FCnywmAEM=', 'bdfd76cae24d4313',
-          apiServer: 'https://api.finclip.com', apiPrefix: '/api/v1/mop');
-      print(res);
-    }
+    // if (Platform.isIOS) {
+    //   final res = await Mop.instance.initialize(
+    //       '22LyZEib0gLTQdU3MUauATBwgfnTCJjdr7FCnywmAEM=', 'bdfd76cae24d4313',
+    //       apiServer: 'https://api.finclip.com', apiPrefix: '/api/v1/mop');
+    //   print(res);
+    // } else if (Platform.isAndroid) {
+    //   final res = await Mop.instance.initialize(
+    //       '22LyZEib0gLTQdU3MUauATBwgfnTCJjdr7FCnywmAEM=', 'bdfd76cae24d4313',
+    //       apiServer: 'https://api.finclip.com', apiPrefix: '/api/v1/mop');
+    //   print(res);
+    // }
+    //多服务器配置
+    FinStoreConfig storeConfigA = FinStoreConfig(
+      "22LyZEib0gLTQdU3MUauAfJ/xujwNfM6OvvEqQyH4igA",
+      "703b9026be3d6bc5",
+      "https://api.finclip.com",
+      cryptType: "SM",
+    );
+    List<FinStoreConfig> storeConfigs = [storeConfigA];
+    Config config = Config(storeConfigs);
+    config.appletDebugMode = BOOLState.BOOLStateTrue;
+
+    UIConfig uiconfig = UIConfig();
+    uiconfig.isHideAddToDesktopMenu = false;
+
+    final res = await Mop.instance.initSDK(config, uiConfig: uiconfig);
+    print(res);
+
     if (!mounted) return;
   }
 
